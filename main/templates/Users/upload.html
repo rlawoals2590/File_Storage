@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Storage</title>
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      font-family: sans-serif;
+      height: 100%;
+      margin: 0;
+    }
+
+    input {
+      border: none;
+      background: transparent;
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+    }
+
+    .image-upload {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .button {
+      display: flex;
+      justify-content: center;
+    }
+
+    label {
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    #chooseFile {
+      visibility: hidden;
+    }
+
+    #uploadFile {
+      visibility: hidden;
+    }
+
+    .fileContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .fileInput {
+      display: flex;
+      align-items: center;
+      border-bottom: solid 2px black;
+      width: 60%;
+      height: 30px;
+    }
+
+    #fileName {
+      margin-left: 5px;
+    }
+
+    .buttonContainer {
+      width: 15%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 10px;
+      background-color: black;
+      color: white;
+      border-radius: 30px;
+      padding: 10px;
+      font-size: 0.8em;
+
+      cursor: pointer;
+    }
+
+    .image-show {
+      z-index: -1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .img {
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="image-upload" id="image-upload">
+
+    <form action="/upload" method="post" enctype="multipart/form-data" name="upload_file" id="upload_file" onsubmit="return nullCheck()">
+      <div class="button">
+        <label for="chooseFile">
+          👉 CLICK HERE! 👈
+        </label>
+      </div>
+      <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+      <div class="fileContainer">
+        <div class="fileInput">
+          <p>FILE NAME: </p>
+          <p id="fileName"></p>
+        </div>
+
+        <div class="buttonContainer">
+          <input type="submit" value="SUBMIT" id="upload_submit">
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="image-show" id="image-show"></div>
+</div>
+
+<script>
+  function nullCheck() {
+    var fileCheck = upload_file.chooseFile.value;
+
+    if(fileCheck == ''){
+      alert('업로드할 파일이 없습니다!');
+      return false;
+    }
+  }
+
+  function loadFile(input) {
+    var file = input.files[0];
+
+    var name = document.getElementById('fileName');
+    name.textContent = file.name;
+  };
+</script>
+</body>
+</html>

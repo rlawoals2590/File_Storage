@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <title>File Storage</title>
+  <style>
+    input:focus {outline:none;}
+  </style>
+</head>
+<body>
+{{ user_name }}'s Files List
+<ul>
+  {% for a, b, c, d in file_info %}
+  <form method="post">
+    <li>file name : <input type="text" name="file_name" id="file_name" value="{{ a }}" style="border: none; background: transparent; display:inline-block; width: 20%;" spellcheck="false" readonly>
+      <input type="submit" value="다운로드" formaction="/download_file">
+      <input type="submit" value="삭제" formaction="/del_file"></li>
+  </form>
+  <li>file size : {{ b }}</li>
+  <li>file extension : {{ c }}</li>
+  <li>file uploaded : {{ d }}</li>
+  <li>---------------------</li>
+  {% endfor %}
+</ul>
+</body>
+</html>
