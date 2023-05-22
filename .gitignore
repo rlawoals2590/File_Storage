@@ -1,0 +1,11 @@
+config.py
+
+.idea/
+
+__pycache__/
+
+main/__pycache__/
+
+main/User/__pycache__/
+
+main/User/Func/__pycache__/
