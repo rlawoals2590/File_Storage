@@ -1,13 +1,13 @@
 config.py
 
-.idea
+.idea/
 
-__pycache__
+__pycache__/
 
-main/__pycache__
+main/__pycache__/
 
-main/User/__pycache__
+main/User/__pycache__/
 
-main/User/Func/__pycache__
+main/User/Func/__pycache__/
 
 
