@@ -30,9 +30,8 @@ class Model:
             "name": self.name,
             "password": password,
             "role": self.role,
-            "folder": self.folder_name,
-            "token": None,
-            "tokenExpiration": None
+            "folder_name": self.folder_name,
+            "token": None
         }
         return user_info
 

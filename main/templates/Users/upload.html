@@ -132,7 +132,7 @@
   function nullCheck() {
     var fileCheck = upload_file.chooseFile.value;
 
-    if(fileCheck == ''){
+    if(fileCheck === ''){
       alert('업로드할 파일이 없습니다!');
       return false;
     }

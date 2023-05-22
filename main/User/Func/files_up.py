@@ -2,7 +2,7 @@ import boto3
 from config import Config
 from datetime import datetime, timezone
 import numpy as np
-
+import os
 
 s3 = boto3.client('s3')
 

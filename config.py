@@ -1,8 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 
 class Config:
-    REGION_NAME = 'ap-northeast-2'
+    REGION_NAME = 'us-east-1'
     TABLE_NAME = 'Users'
 
     JWT_SECRET_KEY = 'b\'_5#y2L"F4Q8z\n\xec]/'
@@ -12,5 +12,3 @@ class Config:
     ACCESS_TOKEN = timedelta(hours=24)
 
     BUCKET_NAME = "s3-bueket-file-storage"
-    REGION : "ap-northeast-2"
-
