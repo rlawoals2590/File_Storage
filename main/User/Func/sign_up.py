@@ -3,8 +3,6 @@ from boto3.dynamodb.conditions import Key
 import bcrypt
 from config import Config
 
-client = boto3.client('dynamodb',
-                      region_name=Config.REGION_NAME)
 resource = boto3.resource('dynamodb', region_name=Config.REGION_NAME)
 table = resource.Table(Config.TABLE_NAME)
 

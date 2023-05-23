@@ -1,5 +1,5 @@
 from datetime import timedelta
-
+import os
 
 class Config:
     REGION_NAME = 'us-east-1'
