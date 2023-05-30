@@ -29,14 +29,14 @@ def registry():
             sing_up(user_info.user_model())
             return f'''
                     <script>
-                        alert('{name}님이 성공적으로 등록되었습니다!')
+                        alert('{user_id}님이 성공적으로 등록되었습니다!')
                         location.href = '/login'
                     </script>
                 '''
         else:
             return f'''
                     <script>
-                        alert('{name}님은 이미 등록되어있습니다.')
+                        alert('{user_id}님은 이미 등록되어있습니다.')
                         location.href = '/register'
                     </script>
                 '''
