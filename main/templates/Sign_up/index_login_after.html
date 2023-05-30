@@ -1,0 +1,132 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Storage</title>
+</head>
+<body>
+Hi {{ user_name }}<br>
+<a href="/logout">logout</a><br>
+<a href="/upload">upload</a><br>
+<a href="/get_files">get files</a><br>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Storage</title>
+    <style>
+        html, body{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            background-color: rgb(230, 215, 253);
+        }
+
+        header{
+            top: 0px;
+            background-color: rgb(177, 132, 248);
+            margin-top: 30px;
+            padding: 5px 0px 90px 70px;
+            font-size: 25px;
+        }
+
+        .S_B{
+            text-decoration: none;
+            position: absolute;
+            color: rgb(98, 0, 255);
+            text-shadow: 2px 1.5px 2px rgb(129, 18, 255);
+        }
+
+        div{
+            text-align: right;
+            margin: 30px 200px 0px 0px;
+        }
+
+        div > a{
+            text-decoration: none;
+            color: black;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        nav{
+            padding: 50px 0px 75px 30px;
+            border-bottom: 2px solid rgba(217, 194, 255, 0.829);
+            width: 1360px;
+            margin-left: 250px;
+        }
+
+        nav > a{
+            font-size: 23px;
+            padding: 10px 70px 10px 70px;
+            text-decoration: none;
+        }
+        .user_id{
+            position: absolute;
+            color: rgb(45, 0, 129);
+        }
+
+        .login{
+            position: absolute;
+            margin-left: 70px;
+            transition: all ease 0.1s 0s;
+            color: rgb(45, 0, 129);
+        }
+
+        .login:hover{
+            font-size: 20.5px;
+            text-decoration: underline;
+        }
+
+        .class_1{
+            position: absolute;
+            transition: all ease 0.25s 0s;
+            color: rgb(95, 27, 255);
+            text-shadow: 1.5px 1px 1.5px rgb(129, 18, 255);
+            font-weight: bold;
+        }
+
+        .class_1:hover{
+            font-size: 26.5px;
+        }
+
+        .class_2{
+            position: absolute;
+            transition: all ease 0.25s 0s;
+            margin-left: 270px;
+            color: rgb(95, 27, 255);
+            text-shadow: 1.5px 1px 1.5px rgb(129, 18, 255);
+            font-weight: bold;
+        }
+
+        .class_2:hover{
+            font-size: 26.5px;
+        }
+
+        p{
+            padding: 70px 300px 200px 300px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h2><a href="/" class="S_B">File Storage</a></h2>
+</header>
+<div><a class="user_id">{{ user_name }}</a></div>
+<div><a href="/logout" class="login">logout</a></div>
+<nav>
+    <a href="/get_files" class="class_1">my storage</a>
+    <a href="/upload" class="class_2">upload to storage</a>
+</nav>
+<p>
+
+</p>
+</body>
+</html>

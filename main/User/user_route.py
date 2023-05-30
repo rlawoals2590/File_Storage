@@ -12,9 +12,9 @@ jwt_blocklist = set()
 @user_route.route('/')
 def index():
     if 'user_id' in session:
-        return render_template('Sign_up/index.html', user_name=escape(session['user_id']))
+        return render_template('Sign_up/index_login_after.html', user_name=escape(session['user_id']))
     else:
-        return "회원가입 및 로그인을 해주세요! <br><a href = '/login'> 로그인 하러가기! </a><br><a href = '/register'> 회원가입 하러가기! "
+        return render_template('Sign_up/index_login_before.html')
 
 
 @user_route.route('/register', methods=['POST', 'GET'])
@@ -30,7 +30,7 @@ def registry():
             return f'''
                     <script>
                         alert('{name}님이 성공적으로 등록되었습니다!')
-                        location.href = '/'
+                        location.href = '/login'
                     </script>
                 '''
         else:
@@ -63,14 +63,14 @@ def login():
                 return f'''
                     <script>
                         alert('아이디 및 비밀번호가 틀렸습니다.')
-                        location.href = '/'
+                        location.href = '/login'
                     </script>
                 '''
         else:
             return f'''
                     <script>
                         alert('등록되지 않은 아이디입니다.')
-                        location.href = '/'
+                        location.href = '/login'
                     </script>
                 '''
     else:
@@ -87,9 +87,12 @@ def logout():
     jti = token['jti']
     jwt_blocklist.add(jti)
 
-    resp = make_response('''
-                        로그아웃을 성공하였습니다! <a href='/'>홈으로</a>이동하세요!
-                    ''')
+    resp = make_response(f'''
+                    <script>
+                        alert('로그아웃을 성공하였습니다!')
+                        location.href = '/'
+                    </script>
+                ''')
     resp.set_cookie('user_access_token', '', expires=0)  # 쿠키 만료 시간을 0으로 설정하여 삭제
 
     return resp

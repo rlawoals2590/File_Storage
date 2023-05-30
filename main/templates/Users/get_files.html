@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -24,6 +24,58 @@
   <li>file uploaded : {{ d }}</li>
   <li>---------------------</li>
   {% endfor %}
+</ul>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Storage</title>
+    <style>
+        html, body{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            background-color: rgb(230, 215, 253);
+        }
+
+        header{
+            top: 0px;
+            background-color: rgb(177, 132, 248);
+            margin-top: 30px;
+            padding: 5px 0px 90px 70px;
+            font-size: 25px;
+        }
+
+        .S_B{
+            text-decoration: none;
+            position: absolute;
+            color: rgb(98, 0, 255);
+            text-shadow: 2px 1.5px 2px rgb(129, 18, 255);
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h2><a href="/" class="S_B">File Storage</a></h2>
+</header>
+<ul>
+    {% for a, b, c, d in file_info %}
+        <form method="post">
+            <li>file name : <input type="text" name="file_name" id="file_name" value="{{ a }}" style="border: none; background: transparent; display:inline-block; width: 20%;" spellcheck="false" readonly>
+                <input type="submit" value="다운로드" formaction="/download_file">
+                <input type="submit" value="삭제" formaction="/del_file"></li>
+        </form>
+        <li>file size : {{ b }}</li>
+        <li>file extension : {{ c }}</li>
+        <li>file uploaded : {{ d }}</li>
+        <li>---------------------</li>
+    {% endfor %}
 </ul>
 </body>
 </html>
