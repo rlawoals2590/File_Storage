@@ -36,7 +36,7 @@ def registry():
         else:
             return f'''
                     <script>
-                        alert('{user_id}님은 이미 등록되어있습니다.')
+                        alert('{user_id}란 아이디는 이미 존재합니다.')
                         location.href = '/register'
                     </script>
                 '''
