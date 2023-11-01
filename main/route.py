@@ -17,7 +17,6 @@ def upload():
         f = request.files['file']
         user_id = escape(session['user_id'])
         folder_name = get_users(user_id)['Items'][0]['folder_name']
-
         filename = str(f.filename.replace(" ", '_'))
         try:
             file_info = handle_get_file(folder_name)
@@ -25,7 +24,6 @@ def upload():
                 image_extensions = ["jpeg", "jpg", "png", "gif", "bmp", "webp", "svg", "ico", "apng", "avif"]
                 file_extension = filename.split('.')[-1]
                 if file_extension in image_extensions:
-                    print(file_extension)
                     f.save('main/static/img/' + filename)
                 else:
                     f.save('main/static/files/' + filename)
@@ -46,10 +44,16 @@ def upload():
         except Exception as e:
             error = str(e).lower()
             if 'nonetype' in error:
+                print("test2")
                 filename = str(f.filename.replace(" ", '_'))
 
-                f.save('main/static/files/' + filename)
-                handle_upload_file(filename, folder_name)
+                image_extensions = ["jpeg", "jpg", "png", "gif", "bmp", "webp", "svg", "ico", "apng", "avif"]
+                file_extension = filename.split('.')[-1]
+                if file_extension in image_extensions:
+                    f.save('main/static/img/' + filename)
+                else:
+                    f.save('main/static/files/' + filename)
+                handle_upload_file(filename, folder_name, file_extension)
                 return f'''
                     <script>
                         alert('{filename}이 성공적으로 저장되었습니다!')
