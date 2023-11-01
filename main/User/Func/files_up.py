@@ -42,12 +42,16 @@ def byte_transform(bytes, bsize=1024):
     return str(round(r, 1)) + ' ' + a[count]
 
 
-def handle_upload_file(f, folder):  # f = 파일명
+def handle_upload_file(f, folder, extension):  # f = 파일명
     folder_name = folder + "/"
     s3.put_object(Bucket=Config.BUCKET_NAME, Key=folder_name)
-    local_file_path = f'files/{f}'
+    image_extensions = ["jpeg", "jpg", "png", "gif", "bmp", "webp", "svg", "ico", "apng", "avif"]
+    if extension in image_extensions:
+        local_file_path = f'main/static/img/{f}'
+    else:
+        local_file_path = f'main/static/files/{f}'
     s3.upload_file(local_file_path, Config.BUCKET_NAME, folder_name + f)
-    return 'Sucess'
+    return 'Success'
 
 
 def handle_get_file(folder):
@@ -74,9 +78,9 @@ def handle_get_file(folder):
 def handle_download_file(f, folder):
     local_file_path = f'main/download/{f}'
     s3.download_file(Config.BUCKET_NAME, folder + "/" + f, local_file_path)
-    return 'Sucess'
+    return 'Success'
 
 
 def handle_delete_file(f, folder):
     s3.delete_object(Bucket=Config.BUCKET_NAME, Key=folder + "/" + f)
-    return 'Sucess'
+    return 'Success'

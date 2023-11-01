@@ -10,8 +10,11 @@ def user_validation():
             current_user_id = get_jwt_identity()
             if not current_user_id:
                 result = '''
-                        잘못된 접근입니다. <a href='/'>홈으로</a>이동하셔서 로그인해주세요.
-                    '''
+                    <script>
+                        alert('잘못된 접근입니다! 로그인을 진행해주세요.')
+                        location.href = '/login'
+                    </script>
+                '''
                 return result
             return f(*args, **kwargs)
 

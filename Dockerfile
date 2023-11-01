@@ -7,7 +7,8 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
-RUN mkdir files
+RUN mkdir main/static/img
+RUN mkdir main/static/files
 RUN mkdir main/download
 
 EXPOSE 5000
@@ -21,6 +22,6 @@ ARG AWS_SECRET_KEY_ID
 
 ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_KEY_ID
-ENV AWS_DEFAULT_REGION=us-west-1
+ENV AWS_DEFAULT_REGION=ap-northeast-2
 
 CMD ["python3", "app.py"]

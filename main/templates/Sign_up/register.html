@@ -1,116 +1,205 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Storage</title>
-</head>
-<body>
-<form action="/register" method="post">
-    <label for="user_id">user id : </label>
-    <input type="text" id="user_id" name="user_id"><br>
-
-    <label for="name">name : </label>
-    <input type="text" id="name" name="name"><br>
-
-    <label for="password">password : </label>
-    <input type="password" id="password" name="password"><br>
-
-    <input type="submit" value="등록">
-</form>
-</body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Storage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>File Storage Login</title>
     <style>
-        html, body{
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: linear-gradient(120deg, #c471ed 0%, #fa71cd 100%);
+        }
+
+        .login-container {
+            background-color: #ffffffe1; /* Semi transparent white */
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+            width: 320px;
+        }
+
+        .login-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .login-container img {
+            display: block;
+            margin: 0 auto 20px;
+            width: 60px;
+        }
+
+        .login-input {
             width: 100%;
-            height: 100%;
-            margin: 0;
-            background-color: rgb(230, 215, 253);
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-bottom: 2px solid #c471ed;
+            border-radius: 5px;
+            background: transparent;
+            outline: none;
+            color: #333;
+            font-size: 16px;
+            transition: all 0.4s ease; /* 부드러운 애니메이션 효과 추가 */
         }
 
-        header{
+        .login-input::placeholder {
+            color: #aaa;
+        }
+
+        .login-input:hover {
+            background-color: #f1e7fe; /* 연한 보라색 배경으로 변경 */
+            color: #333;               /* 텍스트 색상을 다시 어둡게 */
+            border-color: #c471ed;    
+            box-shadow: 0px 0px 15px rgba(209, 174, 252, 0.6); /* 연한 보라색 그림자로 변경 */
+            transform: scale(1.05);    
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #c471ed;
+            background-color: #e4d5f7; /* 포커스 됐을 때도 연한 보라색 배경으로 변경 */
+            color: #333;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #c471ed;
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: #a858d7;
+        }
+
+        .error-message {
+            color: red;
+            margin: 10px 0;
             text-align: center;
-            font-size: 30px;
-            color: rgb(98, 0, 255)
+            display: none; /* 기본적으로 에러 메시지는 숨김 */
+            font-size: 14px;
         }
 
-        header > h2{
-            margin-top: 170px;
-            text-shadow: 2.3px 2.3px 2px rgb(129, 18, 255);
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
         }
 
-        table{
-            width: 370px;
-            height: 100px;
-            border: 3px solid rgb(201, 168, 255);
+        .shake-animation {
+            animation: shake 0.3s linear;
+        }
+
+        .back-to-home {
+            margin-top: 10px;
             text-align: center;
-            margin: auto;
         }
 
-        td{
-            padding-top: 10px;
-            font-weight: bold;
-            color: rgb(49, 0, 112);
-        }
-
-        input{
-            background-color: rgb(233, 218, 250);
-        }
-
-        button{
-            font-size: 20px;
-            margin-top: 17px;
-            margin-bottom: 10px;
-            padding: 7px 85px 7px 85px;
-            background-color: rgb(219, 189, 255);
-            color: rgb(41, 1, 105);
-            font-weight: bold;
-            box-shadow: 2.5px 3px 2px rgb(67, 0, 145);
-        }
-
-        button > a{
+        .back-to-home a {
+            color: #d1aefc;  /* 연한 보라색으로 설정 */
             text-decoration: none;
+            transition: color 0.3s;
         }
 
-        a:active {
-            color: rgb(41, 1, 105);
+        .back-to-home a:hover {
+            color: #c471ed;  /* 진한 보라색으로 변경 */
         }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        #passwordField {
+            padding-right: 30px;  /* 아이콘 공간 확보 */
+        }
+
+        #togglePasswordIcon {
+            position: absolute;
+            right: 10px;
+            top: 35%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            z-index: 5;
+            transition: transform 0.3s; /* 애니메이션 효과 */
+        }
+
+        #togglePasswordIcon:hover {
+            transform: translateY(-50%) scale(1.2); /* 눈 아이콘 확대 */
+        }
+
     </style>
 </head>
 <body>
-<header>
-    <h2>File Storage</h2>
-</header>
-<form action="/register" method="post" id="registerForm">
-    <table>
-        <tr>
-            <td><label for="user_id">id</label></td>
-            <td><input type="text" id="user_id" name="user_id"></td>
-        </tr>
-        <tr>
-            <td><label for="name">name</label></td>
-            <td><input type="text" id="name" name="name"></td>
-        </tr>
-        <tr>
-            <td><label for="password">password</label></td>
-            <td><input type="password" id="password" name="password"></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <button type="submit" form="registerForm">create account</button>
-            </td>
-        </tr>
-    </table>
-</form>
+    <div class="login-container">
+        <h1><a href="/" style="text-decoration: none; color: black;">File Storage</a></h1>
+        <img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1592468667/noticon/mexcsjupsjgrmsoikhpj.png" alt="Folder Icon">
+        <form action="/register" method="post">
+            <input type="text" class="login-input" placeholder="UserId"  id="user_id" name="user_id">
+            <input type="text" class="login-input" placeholder="Username" id="name" name="name">
+            <div class="password-wrapper">
+                <input type="password" id="password" name="password" placeholder="Enter Password" class="login-input">
+                <i class="fas fa-eye" id="togglePasswordIcon"></i>
+            </div>
+            <div class="error-message" id="error-message">Please enter both userid and password and name!</div>
+            <button class="login-btn" onclick="return validateForm()">Sign Up</button>
+            
+            <div class="back-to-home">
+                <p><a href="/">← Go to Home</a></p>
+            </div>
+        </form>
+    </div>
+    <script>
+        function validateForm() {
+            const userid = document.getElementById('user_id').value;
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
+            const errorMessage = document.getElementById('error-message');
+            const loginContainer = document.querySelector('.login-container');
+
+            if (!userid || !password || !name) {
+                errorMessage.style.display = 'block';
+                loginContainer.classList.add('shake-animation');
+                
+                setTimeout(() => {
+                    loginContainer.classList.remove('shake-animation');
+                }, 300); // 0.3s after
+
+                return false;
+
+            } else {
+                errorMessage.style.display = 'none';
+                // 이 부분에서 실제 로그인 처리 로직을 추가할 수 있습니다.
+                return true;
+            }
+        }
+
+        document.getElementById('togglePasswordIcon').addEventListener('click', function() {
+            let passwordField = document.getElementById('password');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                this.classList.remove('fa-eye');
+                this.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                this.classList.remove('fa-eye-slash');
+                this.classList.add('fa-eye');
+            }
+        });
+    </script>
 </body>
 </html>

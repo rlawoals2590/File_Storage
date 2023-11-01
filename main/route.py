@@ -8,12 +8,13 @@ import re
 
 main = Blueprint("route", __name__)
 
+PER_PAGE = 3
 
 @main.route('/upload', methods=['POST', 'GET'])
 @user_validation()
 def upload():
     if request.method == 'POST':
-        f = request.files['chooseFile']
+        f = request.files['file']
         user_id = escape(session['user_id'])
         folder_name = get_users(user_id)['Items'][0]['folder_name']
 
@@ -21,19 +22,25 @@ def upload():
         try:
             file_info = handle_get_file(folder_name)
             if filename not in file_info:
-                f.save('files/' + filename)
-                handle_upload_file(filename, folder_name)
+                image_extensions = ["jpeg", "jpg", "png", "gif", "bmp", "webp", "svg", "ico", "apng", "avif"]
+                file_extension = filename.split('.')[-1]
+                if file_extension in image_extensions:
+                    print(file_extension)
+                    f.save('main/static/img/' + filename)
+                else:
+                    f.save('main/static/files/' + filename)
+                handle_upload_file(filename, folder_name, file_extension)
                 return f'''
                             <script>
                                 alert('{filename}이 성공적으로 저장되었습니다!')
-                                location.href = '/'
+                                location.href = '/get_files'
                             </script>
                         '''
             else:
                 return f'''
                     <script>
                         alert('{filename}이 이미 저장소에 있습니다!')
-                        location.href = '/'
+                        location.href = '/upload'
                     </script>
                 '''
         except Exception as e:
@@ -41,18 +48,18 @@ def upload():
             if 'nonetype' in error:
                 filename = str(f.filename.replace(" ", '_'))
 
-                f.save('files/' + filename)
+                f.save('main/static/files/' + filename)
                 handle_upload_file(filename, folder_name)
                 return f'''
                     <script>
                         alert('{filename}이 성공적으로 저장되었습니다!')
-                        location.href = '/'
+                        location.href = '/get_files'
                     </script>
                 '''
             else:
                 return '에러 발생', e
     else:
-        return render_template('Users/upload.html')
+        return render_template('Users/upload.html', user_name=escape(session['user_id']))
 
 
 @main.route('/get_files', methods=['GET'])
@@ -64,15 +71,21 @@ def get_files():
         file_info = handle_get_file(folder_name)
         if len(file_info) == 0:
             return '''
-                해당 저장소에 저장된 파일이 존재하지않습니다. 파일을 저장하실려면 <a href='/upload'>여기</a>를 눌러 파일을 저장하세요!
-            '''
+                    <script>
+                        alert('해당 저장소에 저장된 파일이 존재하지않습니다. 파일을 업로드해주세요!')
+                        location.href = '/upload'
+                    </script>
+                '''
         return render_template('Users/get_files.html', file_info=file_info, user_name=escape(session['user_id']))
     except Exception as e:
         error = str(e).lower()
         if 'nonetype' in error:
             return '''
-                해당 저장소에 저장된 파일이 존재하지않습니다. 파일을 저장하실려면 <a href='/upload'>여기</a>를 눌러 파일을 저장하세요!
-            '''
+                    <script>
+                        alert('해당 저장소에 저장된 파일이 존재하지않습니다. 파일을 업로드해주세요!')
+                        location.href = '/upload'
+                    </script>
+                '''
         else:
             return '에러 발생', e
 
