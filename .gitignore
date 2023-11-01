@@ -7,3 +7,5 @@ main/__pycache__/
 main/User/__pycache__/
 
 main/User/Func/__pycache__/
+
+.vscode/
