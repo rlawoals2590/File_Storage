@@ -72,6 +72,8 @@ def handle_get_file(folder):
         file_list.insert(count, file_info)
         count += 1
     file_list = np.delete(file_list, 0, 0)
+    print(file_list)
+    print(len(file_list) // 12)
     return file_list
 
 

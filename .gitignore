@@ -9,3 +9,9 @@ main/User/__pycache__/
 main/User/Func/__pycache__/
 
 .vscode/
+
+main/download/*
+
+main/static/files/*
+
+main/static/img/*
