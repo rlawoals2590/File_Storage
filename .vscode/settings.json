@@ -3,10 +3,12 @@
         "apng",
         "blocklist",
         "boto",
+        "bsize",
         "checkpw",
         "gensalt",
         "hashpw",
         "markupsafe",
+        "timestr",
         "userid"
     ]
 }

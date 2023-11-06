@@ -110,7 +110,29 @@
             }
         }
 
+        .sorting-buttons button {
+            background-color: #c471ed;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Updated line */
+            will-change: transform, box-shadow; /* Optimizes for the properties that will change */
+        }
 
+        /* Add styles for the hover state */
+        .sorting-buttons button:hover {
+            background-color: #7a1bd2;
+            transform: translateY(-3px); /* Lifts the button up on hover */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Adds depth with a shadow */
+        }
+
+        /* To differentiate between the two buttons, adjust the background color */
+        .sorting-buttons button:nth-child(2) {
+            background-color: #fa71cd;
+        }
 
         .file-card {
             background-color: #ffffff;
@@ -126,6 +148,10 @@
         
         .file-card:hover {
             transform: translateY(-5px);
+        }
+
+        .file-thumbnail:hover {
+            transform: translateY(-3px);
         }
 
         .file-actions {
@@ -214,14 +240,21 @@
     </div>
 
     <div class="header-content">
+        <!-- Sorting Buttons -->
+        <div class="sorting-buttons" style="padding: 20px;">
+            <form method="get" action="/get_files" style="display: inline;">
+                <button type="submit" name="sorted" value="time" id="sortTimeButton">Sort by Time</button>
+            </form>
+            <form method="get" action="/get_files" style="display: inline;">
+                <button type="submit" name="sorted" value="size" id="sortSizeButton">Sort by Size</button>
+            </form>
+        </div>
         <!-- 파일 리스트 UI -->
         <ul>
-            {% for a, b, c, d in file_info %}
+            {% for a, b, c, d, e in file_info %}
                 <li class="file-card">
                     <form method="post">
-                        {% if c in ["jpeg", "jpg", "png", "gif", "bmp", "webp", "svg", "ico", "apng", "avif"] %}
-                            <img src="{{ url_for('static', filename='img/' + a ) }}" alt="Thumbnail" style="width: 50px; height: 50px;">
-                        {% endif %}
+                        <a onclick="showImage('{{ e }}')"><img src="{{ e }}" alt="Thumbnail" class="file-thumbnail" style="width: 50px; height: 50px;"></a>
                         {% if c in ["doc", "mp3", "pdf", "ppt", "txt", "xls", "zip"] %}
                             <img src="{{ url_for('static', filename='icon/' + c + '.png' ) }}" alt="Thumbnail" style="width: 50px; height: 50px;">
                         {% endif %}
@@ -246,5 +279,34 @@
     <div class="sparkle" style="top: 300px; left: 350px; width: 10px; height: 10px;"></div>
     <div class="sparkle" style="top: 300px; right: 350px; width: 10px; height: 10px;"></div>
 
+    <script>
+        // DOM이 완전히 로드된 후 실행되도록 DOMContentLoaded 이벤트 리스너를 추가합니다.
+        document.addEventListener('DOMContentLoaded', function() {
+            // URL의 쿼리 스트링에서 파라미터를 가져옵니다.
+            var params = new URLSearchParams(window.location.search);
+
+            // 'sorted' 파라미터의 값을 가져옵니다.
+            var sorted = params.get('sorted');
+
+            // 'sorted' 파라미터의 값이 'size'일 경우 버튼의 색깔을 변경합니다.
+            if (sorted === 'size') {
+                var sortButton = document.getElementById('sortSizeButton');
+                if (sortButton) {
+                    sortButton.style.backgroundColor = '#7a1bd2';
+                }
+            } else if (sorted === 'time') {
+                var sortButton = document.getElementById('sortTimeButton');
+                if (sortButton) {
+                    sortButton.style.backgroundColor = '#7a1bd2';
+                }
+            }
+        });
+
+        function showImage(src) {
+            // 이미지를 새 창이나 팝업에서 열기
+            window.open(src);
+        }
+
+    </script>
 </body>
 </html>

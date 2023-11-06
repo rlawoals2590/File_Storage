@@ -15,11 +15,15 @@ PER_PAGE = 3
 def upload():
     if request.method == 'POST':
         f = request.files['file']
+        change_filename = request.form['fileName']
         user_id = escape(session['user_id'])
         folder_name = get_users(user_id)['Items'][0]['folder_name']
-        filename = str(f.filename.replace(" ", '_'))
+        if change_filename:
+            filename = str(change_filename.replace(" ", '_'))
+        else:
+            filename = str(f.filename.replace(" ", '_'))
         try:
-            file_info = handle_get_file(folder_name)
+            file_info = handle_get_file(folder_name, None)
             if filename not in file_info:
                 image_extensions = ["jpeg", "jpg", "png", "gif", "bmp", "webp", "svg", "ico", "apng", "avif"]
                 file_extension = filename.split('.')[-1]
@@ -44,7 +48,6 @@ def upload():
         except Exception as e:
             error = str(e).lower()
             if 'nonetype' in error:
-                print("test2")
                 filename = str(f.filename.replace(" ", '_'))
 
                 image_extensions = ["jpeg", "jpg", "png", "gif", "bmp", "webp", "svg", "ico", "apng", "avif"]
@@ -70,9 +73,11 @@ def upload():
 @user_validation()
 def get_files():
     try:
+        sort = request.args.get('sorted', default=None)
+
         user_id = escape(session['user_id'])
         folder_name = get_users(user_id)['Items'][0]['folder_name']
-        file_info = handle_get_file(folder_name)
+        file_info = handle_get_file(folder_name, sort)
         if len(file_info) == 0:
             return '''
                     <script>

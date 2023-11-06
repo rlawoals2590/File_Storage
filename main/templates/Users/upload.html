@@ -129,14 +129,63 @@
             transform: translateY(-5px);
         }
         
-        .file-name {
+
+        .file-message {
             display: none;
-            margin-top: 15px;
+            text-align: center;
+            margin-top: 20px;
             color: #fff;
-            background-color: rgba(0, 0, 0, 0.2);
+            font-size: 1.2em;
+            padding: 15px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease-out;
+        }
+
+        /* 화면에 나타났다가 사라지는 애니메이션 */
+        .fade-in-out {
+            animation: fadeInOut 3s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0%, to { 
+                opacity: 0; 
+                transform: translateY(-20px);
+            }
+            10% { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+            90% { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 선택한 파일 이름을 더욱 눈에 띄게 표시합니다 */
+        .file-name {
+            display: none; /* 또는 파일이 선택되었을 때 'block'으로 설정합니다 */
+            margin-top: 10px;
             padding: 10px;
             border-radius: 10px;
-            transition: background-color 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            color: #fff;
+            width: calc(100% - 20px); /* 패딩을 고려한 너비 */
+            text-align: center; /* 텍스트를 가운데 정렬합니다 */
+        }
+
+        .highlight {
+            animation: highlightAnimation 2s infinite;
+        }
+
+        @keyframes highlightAnimation {
+            0%, 100% { background-color: rgba(255, 255, 255, 0.3); }
+            50% { background-color: rgba(255, 255, 255, 0.5); }
         }
 
         h1 {
@@ -196,10 +245,13 @@
                 <label for="file" class="upload-btn">Choose a file</label>
                 <input type="file" name="file" id="file" required onchange="displayFileName()">
             </div>
-            <div class="file-name" id="fileName"></div>
+            <input class="file-name" type="text" id="fileName" name="fileName" />
             <input type="submit" value="Upload" class="submit-btn">
         </form>
     </div>
+
+    <!-- header-content 아래에 메시지를 위한 div 추가 -->
+    <div class="file-message" id="fileMessage"></div>
 
     <div class="sparkle" style="top: 100px; left: 150px; width: 10px; height: 10px;"></div>
     <div class="sparkle" style="top: 200px; right: 250px; width: 15px; height: 15px;"></div>
@@ -219,14 +271,31 @@
     function displayFileName() {
         const fileInput = document.getElementById('file');
         const fileNameDisplay = document.getElementById('fileName');
+        const fileMessage = document.getElementById('fileMessage');
         
         if (fileInput.files.length > 0) {
-            fileNameDisplay.textContent = fileInput.files[0].name;
+            fileNameDisplay.value = fileInput.files[0].name;
             fileNameDisplay.style.display = 'block';
+            
+            // 메시지 설정과 애니메이션 클래스 추가
+            fileMessage.textContent = "Click on the file name to update it! Please do not change the extension.";
+            fileMessage.classList.add('fade-in-out');
+            fileMessage.style.display = 'block';
+
+            // 입력 필드에 애니메이션 효과를 추가하여 사용자의 주의를 끕니다.
+            fileNameDisplay.classList.add('highlight');
+            
+            // 메시지가 사라지는 애니메이션 후에 클래스를 제거합니다.
+            setTimeout(function() {
+                fileMessage.classList.remove('fade-in-out');
+                fileMessage.style.display = 'none';
+            }, 3000); // 3초 후에 실행
         } else {
             fileNameDisplay.style.display = 'none';
         }
     }
+
+
 </script>
 </body>
 </html>
