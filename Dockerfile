@@ -9,6 +9,7 @@ COPY . .
 
 RUN mkdir main/static/img
 RUN mkdir main/static/files
+RUN mkdir main/static/img
 RUN mkdir main/download
 
 EXPOSE 5000
