@@ -49,9 +49,10 @@ def handle_upload_file(f, folder, extension):  # f = 파일명
     image_extensions = ["jpeg", "jpg", "png", "gif", "bmp", "webp", "svg", "ico", "apng", "avif"]
     if extension in image_extensions:
         local_file_path = f'main/static/img/{f}'
+        s3.upload_file(local_file_path, Config.BUCKET_NAME, folder_name + f, ExtraArgs={'ContentType': 'image/jpeg','ACL': 'public-read'})
     else:
         local_file_path = f'main/static/files/{f}'
-    s3.upload_file(local_file_path, Config.BUCKET_NAME, folder_name + f, ExtraArgs={'ContentType': 'image/jpeg','ACL': 'public-read'})
+        s3.upload_file(local_file_path, Config.BUCKET_NAME, folder_name + f, ExtraArgs={'ContentType': 'image/' + extension,'ACL': 'public-read', 'ContentDisposition': 'inline'})
     return 'Success'
 
 

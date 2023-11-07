@@ -3,6 +3,7 @@
         "apng",
         "blocklist",
         "boto",
+        "botocore",
         "bsize",
         "checkpw",
         "gensalt",

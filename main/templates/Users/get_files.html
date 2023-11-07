@@ -254,9 +254,11 @@
             {% for a, b, c, d, e in file_info %}
                 <li class="file-card">
                     <form method="post">
-                        <a onclick="showImage('{{ e }}')"><img src="{{ e }}" alt="Thumbnail" class="file-thumbnail" style="width: 50px; height: 50px;"></a>
+                        {% if c in ["jpeg", "jpg", "png", "gif", "bmp", "webp", "svg", "ico", "apng", "avif"] %}
+                            <a onclick="showImage('{{ e }}')"><img src="{{ e }}" alt="Thumbnail" class="file-thumbnail" style="width: 50px; height: 50px;"></a>
+                        {% endif %}
                         {% if c in ["doc", "mp3", "pdf", "ppt", "txt", "xls", "zip"] %}
-                            <img src="{{ url_for('static', filename='icon/' + c + '.png' ) }}" alt="Thumbnail" style="width: 50px; height: 50px;">
+                            <a onclick="openPdf('{{ e }}')"><img src="{{ url_for('static', filename='icon/' + c + '.png' ) }}" alt="Thumbnail" class="file-thumbnail" style="width: 50px; height: 50px;"></a>
                         {% endif %}
                         <div class="file-name" style="color: #7a1bd2;">
                             file name: <input type="text" class="file-name-input" name="file_name" id="file_name" value="{{ a }}" spellcheck="false" readonly>
@@ -305,6 +307,11 @@
         function showImage(src) {
             // 이미지를 새 창이나 팝업에서 열기
             window.open(src);
+        }
+
+        function openPdf(src) {
+            var url = src; // 서버에 저장된 PDF 파일의 경로
+            window.open(url, '_blank'); // 새 탭에서 PDF 파일 열기
         }
 
     </script>

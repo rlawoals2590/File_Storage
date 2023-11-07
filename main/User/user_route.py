@@ -98,9 +98,3 @@ def logout():
     return resp
 
 
-@user_route.route('/login/test')
-@user_validation()
-def login_test():
-    return "Hello, " + session['user_id'] + "!"
-
-
